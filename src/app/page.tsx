@@ -17,7 +17,7 @@ export default function Home() {
         <Header />
         <HeroSection />
         <WhatIsSection />
-        <div className="flex justify-center pb-4">
+        <div className="relative z-10 flex justify-center -mb-20 md:-mb-32">
           <AnimatedStack />
         </div>
       </div>

@@ -38,7 +38,7 @@ const iconColors = [
 
 export default function ActivitiesSection() {
   return (
-    <section id="actividades" className="py-20 md:py-28 bg-[#FEF6EB]">
+    <section id="actividades" className="relative pt-32 md:pt-48 pb-20 md:pb-28 bg-[#FEF6EB]">
       <Container>
         {/* Header */}
         <div className="text-center mb-14">

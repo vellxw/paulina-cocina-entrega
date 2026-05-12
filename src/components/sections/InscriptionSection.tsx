@@ -12,14 +12,24 @@ const trustPoints = [
   "Cupos limitados — garantia de experiencia personalizada",
 ];
 
+function isValidEmail(value: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+}
+
 export default function InscriptionSection() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!name.trim() || !email.trim()) return;
+    if (!isValidEmail(email)) {
+      setEmailError(true);
+      return;
+    }
+    setEmailError(false);
     setSubmitted(true);
   }
 
@@ -64,10 +74,10 @@ export default function InscriptionSection() {
                   <CheckCircle size={36} weight="duotone" className="text-dark" />
                 </div>
                 <h3 className="text-xl font-bold text-dark">
-                  Recibimos tu consulta
+                  ¡Gracias, {name}!
                 </h3>
-                <p className="text-sm text-gray leading-relaxed max-w-[30ch]">
-                  Te contactamos en las proximas horas con toda la informacion.
+                <p className="text-sm text-gray leading-relaxed max-w-[32ch]">
+                  {name}, te contactamos en las próximas horas con toda la información sobre Mini Chefs.
                 </p>
               </div>
             ) : (
@@ -103,10 +113,24 @@ export default function InscriptionSection() {
                       autoComplete="email"
                       placeholder={inscription.emailPlaceholder}
                       value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        if (emailError) setEmailError(false);
+                      }}
                       required
-                      className="w-full h-12 px-4 rounded-xl border border-border bg-white text-dark placeholder:text-gray-light text-sm focus:outline-none focus:ring-2 focus:ring-red/30 focus:border-red/40 transition-all"
+                      aria-invalid={emailError}
+                      aria-describedby={emailError ? "insc-email-error" : undefined}
+                      className={`w-full h-12 px-4 rounded-xl border bg-white text-dark placeholder:text-gray-light text-sm focus:outline-none focus:ring-2 transition-all ${
+                        emailError
+                          ? "border-red focus:ring-red/30 focus:border-red"
+                          : "border-border focus:ring-red/30 focus:border-red/40"
+                      }`}
                     />
+                    {emailError && (
+                      <p id="insc-email-error" className="text-sm text-red">
+                        {inscription.emailError}
+                      </p>
+                    )}
                   </div>
 
                   <RegisterButton type="submit" className="w-full mt-2">
