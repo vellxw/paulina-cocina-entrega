@@ -1,2 +1,3 @@
-npm install
-npm run dev
+Para iniciar la web:
+
+npm install && npm run dev
